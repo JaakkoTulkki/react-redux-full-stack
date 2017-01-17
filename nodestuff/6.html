@@ -1,0 +1,42 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Version 6.html</title>
+</head>
+<body>
+<h1 id="hello">hello</h1>
+<button id="sendit"> this is a button</button>
+<h1 id="counter">0</h1>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+    var socket = io.connect('/');
+
+    socket.on('connect', function () {
+      console.log('client is now connected');
+    });
+
+    socket.on('disconnect', function () {
+      console.log('disconnect');
+    })
+
+    socket.on('chicken', (value)=>{
+      document.getElementById('hello').innerHTML = value;
+    })
+
+    socket.on('buttoncounter', (value)=>{
+      console.log('button counter', value);
+      document.getElementById('counter').innerHTML = value;
+    })
+
+    document.getElementById('sendit').addEventListener("click", (evt)=>{
+      console.log('hello there');
+      socket.emit('sendit');
+    })
+
+</script>
+</body>
+</html>
